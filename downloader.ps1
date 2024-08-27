@@ -18,3 +18,5 @@ $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoi
 
 # Register the scheduled task with the name "Windows Licence Scheduler"
 Register-ScheduledTask -TaskName "Windows Licence Scheduler" -Action $action -Trigger $trigger -Principal $principal -Settings $settings
+
+pause
