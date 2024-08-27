@@ -41,6 +41,7 @@ try {
 } catch {
     Write-Error "Failed to create scheduled task principal: $_"
 }
+pause
 
 try {
     # Create the scheduled task settings
