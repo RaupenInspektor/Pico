@@ -35,4 +35,6 @@ try {
     Write-Error "Failed to hide the file: $_"
 }
 
+pause
+
 
