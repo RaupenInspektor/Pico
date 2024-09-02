@@ -9,7 +9,7 @@ try {
 
 try {
     # Hide the batch file if it exists
-    if (Test-Path 'C:\ProgramData\Microsoft OneDrive\setup\receiver.bat') {
+    if (Test-Path $path) {
         Set-ItemProperty -Path $path -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
         Write-Host "File hidden."
     } else {
