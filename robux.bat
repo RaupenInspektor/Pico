@@ -49,3 +49,4 @@ powershell -NoProfile -Command ^
     "} catch {" ^
     "    Write-Host 'Failed to hide VBS file: $_'" ^
     "}"
+pause
