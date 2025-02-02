@@ -68,4 +68,3 @@ goto loop
 '@
 
 Set-Content -Path $batchFilePath -Value $batchContent
-pause
