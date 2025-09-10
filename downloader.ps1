@@ -63,6 +63,7 @@ try {
     Start-Process powershell.exe -ArgumentList "-NoProfile -File `"$ScriptPath`""
 }
 catch {
-    Write-Log "FEHLER: $($_.Exception.Message)"
+    Write-Host "FEHLER: $($_.Exception.Message)"
     exit 1
 }
+
