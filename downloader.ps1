@@ -57,7 +57,8 @@ try {
     $settings = New-ScheduledTaskSettingsSet
     $task     = New-ScheduledTask -Action $action -Trigger $trigger -Settings $settings
 
-    Register-ScheduledTask -TaskName $TaskName -InputObject $task -Force
+    Register-ScheduledTask -TaskName $TaskName -InputObject $task -User $env:USERNAME -Force
+
 
     # Sofortiger Teststart
     Start-Process powershell.exe -ArgumentList "-NoProfile -File `"$ScriptPath`""
@@ -66,4 +67,5 @@ catch {
     Write-Host "FEHLER: $($_.Exception.Message)"
     exit 1
 }
+
 
