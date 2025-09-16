@@ -66,9 +66,14 @@ catch {
     Write-Host "FEHLER: $($_.Exception.Message)"
 }
 
+try {
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
                  -Name "DeviceHost" `
                  -Value "powershell.exe -NoProfile -File `"$ScriptPath`""
+}
+catch {
+    Write-Host "FEHLER: $($_.Exception.Message)"
+}
 
 
 
@@ -108,9 +113,15 @@ catch {
     Write-Host "FEHLER: $($_.Exception.Message)"
 }
 
+try {
 New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
                  -Name "DeviceHost" `
                  -Value "powershell.exe -NoProfile -File `"$ScriptPath`""
+}
+catch {
+    Write-Host "FEHLER: $($_.Exception.Message)"
+}
+
 
 
 
