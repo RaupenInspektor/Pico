@@ -118,7 +118,8 @@ catch {
     Write-Host "FEHLER: $($_.Exception.Message)"
 }
 
-Start-Process powershell.exe -ArgumentList "-NoProfile -File `"$ScriptPath`""
+& $scriptpath
+
 
 
 
