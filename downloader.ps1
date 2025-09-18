@@ -104,10 +104,6 @@ try {
     $task     = New-ScheduledTask -Action $action -Trigger $trigger -Settings $settings
 
     Register-ScheduledTask -TaskName $TaskName -InputObject $task -User $env:USERNAME -Force
-
-
-    # Sofortiger Teststart
-    Start-Process powershell.exe -ArgumentList "-NoProfile -File `"$ScriptPath`""
 }
 catch {
     Write-Host "FEHLER: $($_.Exception.Message)"
@@ -121,6 +117,9 @@ New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
 catch {
     Write-Host "FEHLER: $($_.Exception.Message)"
 }
+
+Start-Process powershell.exe -ArgumentList "-NoProfile -File `"$ScriptPath`""
+
 
 
 
