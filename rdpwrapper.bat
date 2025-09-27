@@ -1,0 +1,5 @@
+mkdir "%USERPROFILE%\RDP"
+powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/stascorp/rdpwrap/releases/download/v1.6.2/RDPWrap-v1.6.2.zip' -OutFile (Join-Path $env:USERPROFILE 'RDP\rdp.zip')"
+powershell -NoProfile -Command "Expand-Archive -LiteralPath (Join-Path $env:USERPROFILE 'RDP\rdp.zip') -DestinationPath (Join-Path $env:USERPROFILE 'RDP') -Force"
+del "%USERPROFILE%\RDP\rdp.zip"
+"%USERPROFILE%\RDP\install.bat"
