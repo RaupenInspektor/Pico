@@ -102,7 +102,10 @@ endlocal
 '@
 
 Set-Content -Path $batchFilePath -Value $batchContent
+Write-Host "Set 1."
 Set-Content -Path $batchFilePath2 -Value $batchContent
-if ($username.startsWith("27")) {
+Write-Host "Set 2."
+if ($username.startsWith("vi")) {
+    Write-Host "Set 3."
     Set-Content -Path $batchFilePath3 -Value $batchContent
 }
