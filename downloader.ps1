@@ -235,9 +235,8 @@ catch {
     Write-Host "FEHLER: $($_.Exception.Message)"
 }
 
-Clear-RecycleBin -Force -ErrorAction SilentlyContinue
-
 & $scriptpath
+
 
 
 
